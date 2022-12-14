@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Bienvenida</h1>
+				<ol>
+					<li>Comunicación</li>
+					<li>Objetivos</li>
+					<li>Notas y plazos</li>
+					<li>Software para TPs</li>
+					<li>práctica 1...</li>
+				</ol>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+						<h2>Comunicación</h2>
+						<ul>
+							<li>Sitio: compiladores.github.io (tiene el calendario)</li>
+							<li>Discord (unite AHORA)</li>
+							<li>Lista de mails para formalismos: https://groups.google.com/g/lenguajes-y-compiladores</li>
+							<li>Clases en google meet, sala compartida unos minutos antes de la clase</li>
+							<li>https://compiladores.github.io/notas muestra las notas de ustedes.</li>
+						</ul>
+					</script>
+			</section>
+			<section>
+				<h2>Objetivos</h2>
+				<ul>
+					<li>Objetivo de los labs y TP:
+						<ul>
+							<li>Incorporar conceptos teóricos</li>
+							<li>Armar el compilador juntos</li>
+						</ul>
+					</li>
+					<li>
+						Objetivo del TP final: <ul>
+							<li>Sumar al "corpus" de conocimiento de la materia</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section style="font-size: 25px;">
+				<h2>Notas y plazos</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Entregable(s)</th>
+							<th>¿obligatorio?</th>
+							<th>¿Cuándo se hace?</th>
+							<th>Evaluación </th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Labs</td>
+							<td>no, nota extra</td>
+							<td>en clase</td>
+							<td>Objetiva/automática</td>
+						</tr>
+						<tr>
+							<td>TPs</td>
+							<td>si, <b>fechas eliminatorias</b></td>
+							<td>durante la cursada</td>
+							<td>Objetiva/automática</td>
+						</tr>
+						<tr>
+							<td>TPF</td>
+							<td>si, <b>como final</b></td>
+							<td>el último mes y durante finales</td>
+							<td>checklist, subjetiva</td>
+						</tr>
+					</tbody>
+				</table>
+				<ul>
+					<li>Todo por github classroom</li>
+					<li>$NF=(\sum_{i=1}^{7} T_i / 7)\times0.5+TP\times0.5+(\sum_{i=1}^{7} L_i)$</li>
+					<li>https://compiladores.github.io/notas muestra las notas de ustedes.</li>
+				</ul>
+			</section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+		});
+
+	</script>
+
+</body>
+
+</html>
