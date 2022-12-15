@@ -100,9 +100,23 @@
 				</table>
 				<ul>
 					<li>Todo por github classroom</li>
-					<li>$NF=(\sum_{i=1}^{7} T_i / 7)\times0.5+TP\times0.5+(\sum_{i=1}^{7} L_i)$</li>
 					<li>https://compiladores.github.io/notas muestra las notas de ustedes.</li>
 				</ul>
+				\[\begin{aligned}
+				NF=(\sum_{i=1}^{t} TP_i / 7)\times0.5+TPF\times0.5+\sum_{i=1}^{l} L_i
+				\end{aligned} \]
+			</section>
+			<section>
+				<h2>Software</h2>
+				<ul>
+					<li>linux ó WSL</li>
+					<li>deno: no lo instalen</li>
+					<li>ocaml: instalarlo por OPAM</li>
+				</ul>
+			</section>
+			<section>
+				<h2>¿Preguntas?</h2>
+				<p>(A continuación práctica 1 🚀)</p>
 			</section>
 		</div>
 
@@ -114,6 +128,7 @@
 	<script src="plugin/search/search.js"></script>
 	<script src="plugin/markdown/markdown.js"></script>
 	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
 	<script>
 
 		// Also available as an ES module, see:
@@ -125,7 +140,7 @@
 			hash: true,
 
 			// Learn about plugins: https://revealjs.com/plugins/
-			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
 		});
 
 	</script>
