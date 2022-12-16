@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<style>
+	[src*="https://mermaid.ink/svg/"], .invert{
+		filter: invert(100%);
+	}
+	.cols{
+		display: grid; grid-auto-flow: row; grid-template-columns: 1fr 1fr; 
+	}
+	.cols > * {
+		align-self: center;
+		place-self: center;
+	}
+	.cols > img {
+		margin:0
+	}
+
+	.cols3{
+		display: grid; grid-auto-flow: row; grid-template-columns: 1fr 1fr 1fr; 
+	}
+	.cols3 > * {
+		align-self: center;
+		place-self: center;
+	}
+	.cols3 > img {
+		margin:0
+	}
+
+</style>
+<body>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Semántica operacional</h1>
+				<ol style="font-size: 12px; " >
+					<li>Árboles en ocaml</li>
+					<li>AST en ocaml</li>
+					<li>Sistemas de transición</li>
+					<li>Recursión y match en ocaml</li>
+					<li>Ejemplos (muchos!)<ol>
+						<li>Switch</li>
+						<li>Switch2</li>
+						<li>Three counter machines (Plotkin)</li>
+						<li>Untyped Arithmetic Expressions (TAPL)</li>
+						<li>Cálculo lambda (TAPL)</li>
+						<li>While 3CM</li>
+					</ol></li>
+					<li>Intervalo</li>
+					<li>Presentación de lab 1, tp1, tp2</li>
+					<li>Consultas lab 1</li>
+					
+				</ol>
+			</section>
+			<section data-auto-animate>
+				<h2>Árboles en ocaml</h2>
+				<div class="cols" style="font-size: 30px;">
+					<pre><code class="hljs language-ocaml" data-line-numbers="1,2" data-trim data-noescape >
+						type tree = Node of tree * tree 
+							| Leave of string
+
+						let a1:tree = Leave "hola"
+
+						let a2:tree = Node( 
+							Leave "izq", 
+							Leave "der"
+						)
+
+						let a3:tree = Node(
+										Node( 
+											Leave "izq", 
+											Leave "der"
+										),
+										Leave "masder"
+									)
+				</code></pre>
+				</div>
+			</section>
+			<section data-auto-animate>
+				<h2>Árboles en ocaml</h2>
+				<div class="cols" style="font-size: 30px;">
+					<pre><code class="hljs language-ocaml" data-line-numbers="1,2,4" data-trim data-noescape >
+						type tree = Node of tree * tree 
+							| Leave of string
+
+						let a1:tree = Leave "hola"
+
+						let a2:tree = Node( 
+							Leave "izq", 
+							Leave "der"
+						)
+
+						let a3:tree = Node(
+										Node( 
+											Leave "izq", 
+											Leave "der"
+										),
+										Leave "masder"
+									)
+				</code></pre>
+					<img  src="https://mermaid.ink/svg/pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0?type=png)](https://mermaid.live/edit#pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0" height="300"/>
+				</div>
+			</section>
+			<section data-auto-animate>
+				<h2>Árboles en ocaml</h2>
+				<div class="cols" style="font-size: 30px;">
+					<pre><code class="hljs language-ocaml" data-line-numbers="1,2,6-9" data-trim data-noescape >
+						type tree = Node of tree * tree 
+							| Leave of string
+
+						let a1:tree = Leave "hola"
+
+						let a2:tree = Node( 
+							Leave "izq", 
+							Leave "der"
+						)
+
+						let a3:tree = Node(
+										Node( 
+											Leave "izq", 
+											Leave "der"
+										),
+										Leave "masder"
+									)
+				</code></pre>
+					<img  src="https://mermaid.ink/svg/pako:eNplzrEKwjAQBuBXCTeIQvsCGQS1o5vdPIej-WsDTdrGRNDSdzc6Kd5yP8cH_83UDAak6Rpk7FRdsVd5duc6ABdVltv9mukIuUOtpjRE-5w-m2nzRw-_1CB8UyrIITixJtfN7wtT7ODApHM0aCX1GbNfMpUUh9PDN6RjSCgojUYiKiv5UUe6lf6G5QUYgj1U?type=png)](https://mermaid.live/edit#pako:eNplzrEKwjAQBuBXCTeIQvsCGQS1o5vdPIej-WsDTdrGRNDSdzc6Kd5yP8cH_83UDAak6Rpk7FRdsVd5duc6ABdVltv9mukIuUOtpjRE-5w-m2nzRw-_1CB8UyrIITixJtfN7wtT7ODApHM0aCX1GbNfMpUUh9PDN6RjSCgojUYiKiv5UUe6lf6G5QUYgj1U" height="300"/>
+				</div>
+			</section>
+			<section data-auto-animate>
+				<h2>Árboles en ocaml</h2>
+				<div class="cols" style="font-size: 30px;">
+					<pre><code class="hljs language-ocaml" data-line-numbers="1,2,11-17" data-trim data-noescape >
+						type tree = Node of tree * tree 
+							| Leave of string
+
+						let a1:tree = Leave "hola"
+
+						let a2:tree = Node( 
+							Leave "izq", 
+							Leave "der"
+						)
+
+						let a3:tree = Node(
+										Node( 
+											Leave "izq", 
+											Leave "der"
+										),
+										Leave "masder"
+									)
+					</code></pre>
+					<img  src="https://mermaid.ink/svg/pako:eNp1z00KwjAQBeCrhFmIQnuBLIRql-7szrgYmlcbaPqTJoKW3t0oglR0Vo_HxzAzUdlpkKSL474WRa5aESfjU-GAs0jTrch-dPla0QF8hVgNofOWRw33ioo2b__hu6U29-Ev3S_p11ZKyMJZNjqePD0bRb6GhSIZo0bFoYlYtXOkHHx3vLUlSe8CEgq9Zo_ccHzWkqy4GTE_ANmEUaU?type=png)](https://mermaid.live/edit#pako:eNp1z00KwjAQBeCrhFmIQnuBLIRql-7szrgYmlcbaPqTJoKW3t0oglR0Vo_HxzAzUdlpkKSL474WRa5aESfjU-GAs0jTrch-dPla0QF8hVgNofOWRw33ioo2b__hu6U29-Ev3S_p11ZKyMJZNjqePD0bRb6GhSIZo0bFoYlYtXOkHHx3vLUlSe8CEgq9Zo_ccHzWkqy4GTE_ANmEUaU" height="300"/>
+				</div>
+			</section>
+			<section>
+				<h2>AST: Árbol de sintaxis abstracto</h2>
+				<div>
+					<pre><code class="hljs language-c">
+						float matchO(char *s) { /* find a zero */
+							if (!strncmp(s, "0.0", 3))
+							return 0.;
+						}
+					</code></pre>
+					<img src="/assets/ast.png"/>
+				</div>
+			</section>
+			<section>
+				<h3>AST: Árbol de sintaxis abstracto</h3>
+				<aside class="notes">Se analiza/lee cada AST al revelarlo y por qué son mejores que la representación textual.</aside>
+				<pre style="width: 100%; margin:0; text-align: center;" class="fragment" data-fragment-index="4"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
+					type expr = Lit of int | Sum of expr * expr | Times of expr * expr
+				</code></pre>
+				<div class="cols3" class="fragment" data-fragment-index="1">
+					<div>
+						<pre><code class="hljs language-c" data-trim data-noescape>
+							2 * 3 + 1
+						</code></pre>
+						<img src="https://mermaid.ink/svg/pako:eNodjTEOwjAQBL9yuoICkgLoXCAB5gXQnV2c4guJFDuRsQsU5e_YdLuj0e6K3ewEFb4jLwO8tAkAVzpYaNsL3GhvYQd3OtrK_7VyTafKH3S22KCX6Hl0ZWStlsE0iBeDqkQnPecpGTRhKyrnND-_oUOVYpYG8-I4iR653HtUPU8f2X5Diy02" height="300"/>
+						<pre class="fragment" data-fragment-index="5"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
+							Sum(
+								Times(Lit 2, Lit 3),
+								Lit 1
+							)
+						</code></pre>
+					</div>
+
+					<div class="fragment" data-fragment-index="2">
+						<pre><code class="language-c" data-trim data-noescape>
+							1 * 2 * 3
+						</code></pre>
+						<img src="https://mermaid.ink/svg/pako:eNo1jbEOgzAQQ3_l5KFDBUPbLUOlFv6AboThRI6CRAJKk6FC_HuPoZv9bMsb-sUJDN6R15FetQ1Ej_bcUVne6dleOjpRpf7g1Z9fFd5QwEv0PDmdb0dukUbxYmFUOhk4z8nChl2rnNPSfEMPk2KWAnl1nKSeWI89zMDzR_YfPDkrPQ" height="300"/>
+						<pre class="fragment" data-fragment-index="6"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
+							Times(
+								Lit 1
+								Times(Lit 2, Lit 3),
+							)
+						</code></pre>
+					</div>
+
+					<div class="fragment" data-fragment-index="3">
+						<pre><code class="language-c" data-trim data-noescape>
+							(1 * 2) * 3
+						</code></pre>
+						<img src="https://mermaid.ink/svg/pako:eNo1jTEOgzAQBL9y2iIFgiKhcxEphB-QDlOc8BGQsEGOXUSIv8cu0o1md7UHxs0IFN6e95lerXZEj74YqKru1GS40LOvh-ybv78meUMJK97yYtL8yLlGmMWKhkpoZOK4Bg3tzlTlGLbu60ao4KOUiLvhIO3C6dhCTbx-5PwBO8krPA" height="300"/>
+						<pre class="fragment" data-fragment-index="7"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
+							Times(
+								Times(Lit 1, Lit 2),
+								Lit 3
+							)
+						</code></pre>
+					</div>
+				</div>
+			</section>
+			<section data-background-iframe="https://replit.com/@jisbruzzi/operational-semantics?embed=true#main.ml" data-background-interactive data-background-interactive>
+				<h2>Ejercicio interactivo</h2>
+				<p>https://replit.com/@jisbruzzi/operational-semantics#main.ml</p>
+			</section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>
