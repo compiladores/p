@@ -183,7 +183,7 @@
 							return 0.;
 						}
 					</code></pre>
-					<img src="/assets/ast.png"/>
+					<img src="./assets/ast.png"/>
 				</div>
 			</section>
 			<section>
@@ -233,9 +233,113 @@
 					</div>
 				</div>
 			</section>
-			<section data-background-iframe="https://replit.com/@jisbruzzi/operational-semantics?embed=true#main.ml" data-background-interactive data-background-interactive>
+			<section data-background-iframe="https://replit.com/@jisbruzzi/ex1-structural-recursion-ocaml?v=1&embed=true#main.ml" data-background-interactive data-background-interactive>
 				<h2>Ejercicio interactivo</h2>
-				<p>https://replit.com/@jisbruzzi/operational-semantics#main.ml</p>
+				<p>https://replit.com/@jisbruzzi/ex1-structural-recursion-ocaml</p>
+				<aside class="notes">
+					<p>Vamos a hacer un par de ejercicios con recursividad estructural:</p>
+					<ul>
+						<li>eval</li>
+						<li>contar cantidad de suma</li>
+						<li>algún eval alternativo?</li>
+						<li>transición small step?</li>
+					</ul>
+				</aside>
+			</section>
+			<section style="font-size: 28px;">
+				<h3>Sistemas de transición[Plotkin 1.2]</h3>
+				<aside class="notes">Plotkin, G D. A structural approach to operational semantics. Sección 1.2.</aside>
+				<p>
+					<ul>
+						<li>Dupla $(\Gamma,\to)$</li>
+						<li>$\Gamma$ conjunto de <i>configuraciones</i></li>
+						<li>$\to$ relación entre elementos de $\Gamma$.</li>
+						<li>$\to \subset \Gamma \times \Gamma$</li>
+					</ul>
+				</p>
+				<div class="fragment">
+					<h3>ST terminales[Plotkin 1.2]</h3>
+					<p>
+						<ul>
+							<li>Tripla $(\Gamma,\to,T)$</li>
+							<li>No se puede transicionar desde un elemento de $T\subset\Gamma$ </li>
+							<li>$\forall \gamma \in T \forall \gamma' \in \Gamma. \gamma \not\to \gamma'$</li>
+						</ul>
+					</p>
+				</div>
+				<div class="fragment">
+					<h3>ST determinísticos [TAPL 3.5.4]</h3>
+					<ul>
+						<li>$\to$ es una función</li>
+						<li>$ \gamma\to\gamma' \land \gamma\to\gamma'' \implies \gamma'=\gamma''$</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h2>Ejemplo: lenguaje Switch</h2>
+				<section data-auto-animate>
+					<pre data-id="code"><code class="hljs language-ocaml" data-trim data-noescape data-line-numbers>
+						type operatons = Switch operations | End
+						type state = On|Off
+						type sconfig = operations*state
+					</code></pre>
+					<div class="cols">
+						<img src="./assets/switch.webp" height="400"/>
+						<div>
+							<p><pre style="width: 100%; margin:0">
+								<code class="hljs language-ocaml" data-trim data-noescape data-line-numbers="1|2|3|4">
+									let c1=(Switch (Switch (Switch End)),On);;
+									let c2=(Switch (Switch End),Off);;
+									let c3=(Switch End,On);;
+									let c4=(End,Off);;
+								</code>
+							</pre></p>
+							<ul class="fragment" style="font-size: 30px;">
+								<li><code>(Switch(x),On)</code>$\to$<code>(x,Off)</code></li>
+								<li><code>(Switch(x),Off)</code>$\to$<code>(x,On)</code></li>
+								<li>$T=\{$ <code>(End,On)</code> , <code>(End,Off)</code> $\}$</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-auto-animate>
+					<ul style="font-size: 30px;">
+						<li><code>(Switch(x),On)</code>$\to$<code>(x,Off)</code></li>
+						<li><code>(Switch(x),Off)</code>$\to$<code>(x,On)</code></li>
+						<li>$T=\{$ <code>(End,On)</code> , <code>(End,Off)</code> $\}$</li>
+					</ul>
+					<pre data-id="code"><code class="hljs language-ocaml" data-trim data-noescape data-line-numbers="1-3|7-11|13-19" >
+						type operatons = Switch operations | End
+						type state = On|Off
+						type sconfig = operations*state
+
+						exception Terminal
+
+						let small_step (config:sconfig):sconfig =
+							match config with
+							| (Switch x, On) -> (x, Off)
+							| (Switch x, Off) -> (x, On)
+							| (End, _) -> raise Terminal;;
+						
+						let rec big_step (config:sconfig):sconfig =
+							match config with
+							| (Switch End, On) -> (End,Off)
+							| (Switch End, Off) -> (End, On)
+							| (Switch x, On) -> big_step (x,Off)
+							| (Switch x, Off) -> big_step (x, On)
+							| (End, _) -> raise Terminal;;
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				Objetivo: que ellos sepan modelar small step de AST + estado
+				Pasos siguientes:
+					1. Hacer un ejercicio en vivo de switch 2 o algo así? Para que hagan algo interesante con estado. Capaz un ejercicio con `Push of int | Times | Sum`?
+					2. Plantear el "paso a paso" del ejemplo de fórmulas matemáticas
+					3. Hacer un ejercicio de small step de fórmulas matemáticas, programando ese paso a paso
+					4. Plantear eso que programaron con la notación de la barra horizontal
+					5. Mostrar un par de ejemplos con la notación de la barra horizontal (TAPL)
+					6. Listo, presentamos el lab, donde tienen que hacer el lenguaje del TAPL. Cálculo lambda queda para el TP?
 			</section>
 		</div>
 
@@ -257,7 +361,7 @@
 			progress: true,
 			center: true,
 			hash: true,
-
+			navigationMode:"linear",
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
 		});
