@@ -332,6 +332,37 @@
 				</section>
 			</section>
 			<section>
+				<script src="https://ocsigen.org/js_of_ocaml/latest/manual/files/toplevel/toplevel.js"></script>
+				<h2>Ejemplo: lenguage pp</h2>
+				<section>
+					<h3>Aclaración: listas</h3>
+					<iframe src="./ocaml-toplevel.html" width="800" height="400" ></iframe>
+					<aside class="notes">
+						Ejemplos:
+						- []
+						- 1::[]
+						- [1;2;3]
+						- 1::2::3::[]
+						- 1::[2,3,4,5]
+					</aside>
+
+				</section>
+				<section>
+					<pre data-id="code"><code class="hljs language-ocaml" data-trim data-noescape data-line-numbers>
+						type operation = Push of int | Times | Add 
+						type ppconfig = (operation list * int list)
+					</code></pre>
+					<div>
+						<ul>
+							<li><code>(Push x::tl,s)</code> $\to$ <code>(tl,x::s)</code></li>
+							<li><code>(Add::tl,a::b::s)</code> $\to$ <code>(tl,(a+b)::s)</code></li>
+							<li><code>(Times::tl,a::b::s)</code> $\to$ <code>(tl,(a*b)::s)</code></li>
+							<li>$T=\{$ <code>([],x)</code> $\}$</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section>
 				Objetivo: que ellos sepan modelar small step de AST + estado
 				Pasos siguientes:
 					1. Hacer un ejercicio en vivo de switch 2 o algo así? Para que hagan algo interesante con estado. Capaz un ejercicio con `Push of int | Times | Sum`?
