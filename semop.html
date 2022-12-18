@@ -43,6 +43,10 @@
 		align-self: center;
 		place-self: center;
 	}
+	.cols-left > * {
+		align-self: left;
+		place-self: 0px;
+	}
 	.cols3 > img {
 		margin:0
 	}
@@ -359,6 +363,43 @@
 							<li><code>(Times::tl,a::b::s)</code> $\to$ <code>(tl,(a*b)::s)</code></li>
 							<li>$T=\{$ <code>([],x)</code> $\}$</li>
 						</ul>
+					</div>
+				</section>
+				<section>
+					<h3>Big step vs small step</h3>
+					<div class="cols cols-left" style="font-size:22px; text-align: left;">
+						<div>
+							small step
+						</div>
+						<div>
+							big step
+						</div>
+						<div>
+							<code>3*4+2*3</code>$\to$<br/>
+							<code>12+2*3</code>$\to$<br/>
+							<code>12+6</code>$\to$<br/>
+							<code>18</code>
+						</div>
+						<p><code>3*4+2*3</code>$\to$<code>18</code></p>
+						<p>
+							<code>(Switch (Switch (Switch End)),On)</code>$\to$<br/>
+							<code>((Switch (Switch End),Off)</code>$\to$<br/>
+							<code>(Switch End,On)</code>$\to$<br/>
+							<code>(End,Off)</code>
+						</p>
+						<p>
+							<code>(Switch (Switch (Switch End)),On)</code>$\to$<code>(End,Off)</code>
+						</p>
+						<p>
+							<code>([Push 1; Push 2;Add];[])</code>$\to$<br/>
+							<code>([Push 2;Add];[1])</code>$\to$<br/>
+							<code>([Add];[1;2])</code>$\to$<br/>
+							<code>([];[3])</code>
+						</p>
+						<p>
+							<code>([Push 1; Push 2;Add];[])</code>$\to$
+							<code>([];[3])</code>
+						</p>
 					</div>
 				</section>
 			</section>
