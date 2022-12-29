@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	
+
 	<title>reveal.js – The HTML Presentation Framework</title>
 
 	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
@@ -22,36 +22,47 @@
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
 </head>
 <style>
-	[src*="https://mermaid.ink/svg/"], .invert{
+	[src*="https://mermaid.ink/svg/"],
+	.invert {
 		filter: invert(100%);
 	}
-	.cols{
-		display: grid; grid-auto-flow: row; grid-template-columns: 1fr 1fr; 
-	}
-	.cols > * {
-		align-self: center;
-		place-self: center;
-	}
-	.cols > img {
-		margin:0
+
+	.cols {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr;
 	}
 
-	.cols3{
-		display: grid; grid-auto-flow: row; grid-template-columns: 1fr 1fr 1fr; 
-	}
-	.cols3 > * {
+	.cols>* {
 		align-self: center;
 		place-self: center;
 	}
-	.cols-left > * {
+
+	.cols>img {
+		margin: 0
+	}
+
+	.cols3 {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.cols3>* {
+		align-self: center;
+		place-self: center;
+	}
+
+	.cols-left>* {
 		align-self: left;
 		place-self: 0px;
 	}
-	.cols3 > img {
-		margin:0
-	}
 
+	.cols3>img {
+		margin: 0
+	}
 </style>
+
 <body>
 
 	<div class="reveal">
@@ -60,23 +71,24 @@
 		<div class="slides">
 			<section>
 				<h1>Semántica operacional</h1>
-				<ol style="font-size: 12px; " >
+				<ol style="font-size: 12px; ">
 					<li>Árboles en ocaml</li>
 					<li>AST en ocaml</li>
 					<li>Sistemas de transición</li>
 					<li>Recursión y match en ocaml</li>
 					<li>Ejemplos (muchos!)<ol>
-						<li>Switch</li>
-						<li>Switch2</li>
-						<li>Three counter machines (Plotkin)</li>
-						<li>Untyped Arithmetic Expressions (TAPL)</li>
-						<li>Cálculo lambda (TAPL)</li>
-						<li>While 3CM</li>
-					</ol></li>
+							<li>Switch</li>
+							<li>Switch2</li>
+							<li>Three counter machines (Plotkin)</li>
+							<li>Untyped Arithmetic Expressions (TAPL)</li>
+							<li>Cálculo lambda (TAPL)</li>
+							<li>While 3CM</li>
+						</ol>
+					</li>
 					<li>Intervalo</li>
 					<li>Presentación de lab 1, tp1, tp2</li>
 					<li>Consultas lab 1</li>
-					
+
 				</ol>
 			</section>
 			<section data-auto-animate>
@@ -125,7 +137,8 @@
 										Leave "masder"
 									)
 				</code></pre>
-					<img  src="https://mermaid.ink/svg/pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0?type=png)](https://mermaid.live/edit#pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0" height="300"/>
+					<img src="https://mermaid.ink/svg/pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0?type=png)](https://mermaid.live/edit#pako:eNoljTsOwjAQBa9ivYIqJzAVUko66FiKVbzBkfwJZo2EotydRbxqijeaDVMNAo9H4zW660jF2U43wln4Le7w7FWPsSb-E-GOAVla5iWYt_0EgkbJQvCGQWbuSQlUdrty13r5lAleW5cBfQ2sMi5sxQw_c3rJ_gWJCSz0"
+						height="300" />
 				</div>
 			</section>
 			<section data-auto-animate>
@@ -150,7 +163,8 @@
 										Leave "masder"
 									)
 				</code></pre>
-				<img  src="https://mermaid.ink/svg/pako:eNplj8EKwjAMhl-l5CAK2wv0IKg76i56sx7CmrnCum41FXTs3Y3zopjLHz4-SP4RqmAJNFwj9o06FaZTMptzKfii8ny9XRrYE95JLYYU2D2HOQ2s_tTdr2opfquQgafo0Vk5N76JAW7IkwEtq6UaUyuy6SZRMXE4ProKNMdEGaTeIlPhUB71oGtsb0LJOg7x8KkwN5leGWlD1Q" height="300"/>
+					<img src="https://mermaid.ink/svg/pako:eNplj8EKwjAMhl-l5CAK2wv0IKg76i56sx7CmrnCum41FXTs3Y3zopjLHz4-SP4RqmAJNFwj9o06FaZTMptzKfii8ny9XRrYE95JLYYU2D2HOQ2s_tTdr2opfquQgafo0Vk5N76JAW7IkwEtq6UaUyuy6SZRMXE4ProKNMdEGaTeIlPhUB71oGtsb0LJOg7x8KkwN5leGWlD1Q"
+						height="300" />
 				</div>
 			</section>
 			<section data-auto-animate>
@@ -175,7 +189,8 @@
 										Leave "masder"
 									)
 					</code></pre>
-					<img  src="https://mermaid.ink/svg/pako:eNp1kMEKwjAMhl-l5CAK8wV6EKY7qhe9WQ9hzVxhXbeuFXTs3Y1TkInm9PPxEZK_h9xpAgkXj00pjpmqBU-Kpz3zs1guVyL9wbK5gi3hlcSsjS5Y7DT5MSpYvP2Pvp7a5t7-VTdT9WsrJGDJWzSaT-6fREEoyZICyVFTgbFiWdUDqxiDO9zqHGTwkRKIjcZAmUF-1oIssOqYkjbB-d2rhrGN4QFd_1gS" height="300"/>
+					<img src="https://mermaid.ink/svg/pako:eNp1kMEKwjAMhl-l5CAK8wV6EKY7qhe9WQ9hzVxhXbeuFXTs3Y1TkInm9PPxEZK_h9xpAgkXj00pjpmqBU-Kpz3zs1guVyL9wbK5gi3hlcSsjS5Y7DT5MSpYvP2Pvp7a5t7-VTdT9WsrJGDJWzSaT-6fREEoyZICyVFTgbFiWdUDqxiDO9zqHGTwkRKIjcZAmUF-1oIssOqYkjbB-d2rhrGN4QFd_1gS"
+						height="300" />
 				</div>
 			</section>
 			<section>
@@ -187,12 +202,13 @@
 							return 0.;
 						}
 					</code></pre>
-					<img src="./assets/ast.png"/>
+					<img src="./assets/ast.png" />
 				</div>
 			</section>
 			<section>
 				<h3>AST: Árbol de sintaxis abstracto</h3>
-				<aside class="notes">Se analiza/lee cada AST al revelarlo y por qué son mejores que la representación textual.</aside>
+				<aside class="notes">Se analiza/lee cada AST al revelarlo y por qué son mejores que la representación
+					textual.</aside>
 				<pre style="width: 100%; margin:0; text-align: center;" class="fragment" data-fragment-index="4"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
 					type expr = Lit of int | Sum of expr * expr | Times of expr * expr
 				</code></pre>
@@ -201,7 +217,8 @@
 						<pre><code class="hljs language-c" data-trim data-noescape>
 							2 * 3 + 1
 						</code></pre>
-						<img src="https://mermaid.ink/svg/pako:eNodjTEOwjAQBL9yuoICkgLoXCAB5gXQnV2c4guJFDuRsQsU5e_YdLuj0e6K3ewEFb4jLwO8tAkAVzpYaNsL3GhvYQd3OtrK_7VyTafKH3S22KCX6Hl0ZWStlsE0iBeDqkQnPecpGTRhKyrnND-_oUOVYpYG8-I4iR653HtUPU8f2X5Diy02" height="300"/>
+						<img src="https://mermaid.ink/svg/pako:eNodjTEOwjAQBL9yuoICkgLoXCAB5gXQnV2c4guJFDuRsQsU5e_YdLuj0e6K3ewEFb4jLwO8tAkAVzpYaNsL3GhvYQd3OtrK_7VyTafKH3S22KCX6Hl0ZWStlsE0iBeDqkQnPecpGTRhKyrnND-_oUOVYpYG8-I4iR653HtUPU8f2X5Diy02"
+							height="300" />
 						<pre class="fragment" data-fragment-index="5"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
 							Sum(
 								Times(Lit 2, Lit 3),
@@ -214,7 +231,8 @@
 						<pre><code class="language-c" data-trim data-noescape>
 							1 * 2 * 3
 						</code></pre>
-						<img src="https://mermaid.ink/svg/pako:eNo1jbEOgzAQQ3_l5KFDBUPbLUOlFv6AboThRI6CRAJKk6FC_HuPoZv9bMsb-sUJDN6R15FetQ1Ej_bcUVne6dleOjpRpf7g1Z9fFd5QwEv0PDmdb0dukUbxYmFUOhk4z8nChl2rnNPSfEMPk2KWAnl1nKSeWI89zMDzR_YfPDkrPQ" height="300"/>
+						<img src="https://mermaid.ink/svg/pako:eNo1jbEOgzAQQ3_l5KFDBUPbLUOlFv6AboThRI6CRAJKk6FC_HuPoZv9bMsb-sUJDN6R15FetQ1Ej_bcUVne6dleOjpRpf7g1Z9fFd5QwEv0PDmdb0dukUbxYmFUOhk4z8nChl2rnNPSfEMPk2KWAnl1nKSeWI89zMDzR_YfPDkrPQ"
+							height="300" />
 						<pre class="fragment" data-fragment-index="6"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
 							Times(
 								Lit 1
@@ -227,7 +245,8 @@
 						<pre><code class="language-c" data-trim data-noescape>
 							(1 * 2) * 3
 						</code></pre>
-						<img src="https://mermaid.ink/svg/pako:eNo1jTEOgzAQBL9y2iIFgiKhcxEphB-QDlOc8BGQsEGOXUSIv8cu0o1md7UHxs0IFN6e95lerXZEj74YqKru1GS40LOvh-ybv78meUMJK97yYtL8yLlGmMWKhkpoZOK4Bg3tzlTlGLbu60ao4KOUiLvhIO3C6dhCTbx-5PwBO8krPA" height="300"/>
+						<img src="https://mermaid.ink/svg/pako:eNo1jTEOgzAQBL9y2iIFgiKhcxEphB-QDlOc8BGQsEGOXUSIv8cu0o1md7UHxs0IFN6e95lerXZEj74YqKru1GS40LOvh-ybv78meUMJK97yYtL8yLlGmMWKhkpoZOK4Bg3tzlTlGLbu60ao4KOUiLvhIO3C6dhCTbx-5PwBO8krPA"
+							height="300" />
 						<pre class="fragment" data-fragment-index="7"><code style="width: 100%; margin:0" class="hljs language-ocaml" data-trim data-noescape >
 							Times(
 								Times(Lit 1, Lit 2),
@@ -237,7 +256,9 @@
 					</div>
 				</div>
 			</section>
-			<section data-background-iframe="https://replit.com/@jisbruzzi/ex1-structural-recursion-ocaml?v=1&embed=true#main.ml" data-background-interactive>
+			<section
+				data-background-iframe="https://replit.com/@jisbruzzi/ex1-structural-recursion-ocaml?v=1&embed=true#main.ml"
+				data-background-interactive>
 				<h2>Ejercicio interactivo</h2>
 				<p>https://replit.com/@jisbruzzi/ex1-structural-recursion-ocaml</p>
 				<aside class="notes">
@@ -254,21 +275,21 @@
 				<h3>Sistemas de transición[Plotkin 1.2]</h3>
 				<aside class="notes">Plotkin, G D. A structural approach to operational semantics. Sección 1.2.</aside>
 				<p>
-					<ul>
-						<li>Dupla $(\Gamma,\to)$</li>
-						<li>$\Gamma$ conjunto de <i>configuraciones</i></li>
-						<li>$\to$ relación entre elementos de $\Gamma$.</li>
-						<li>$\to \subset \Gamma \times \Gamma$</li>
-					</ul>
+				<ul>
+					<li>Dupla $(\Gamma,\to)$</li>
+					<li>$\Gamma$ conjunto de <i>configuraciones</i></li>
+					<li>$\to$ relación entre elementos de $\Gamma$.</li>
+					<li>$\to \subset \Gamma \times \Gamma$</li>
+				</ul>
 				</p>
 				<div class="fragment">
 					<h3>ST terminales[Plotkin 1.2]</h3>
 					<p>
-						<ul>
-							<li>Tripla $(\Gamma,\to,T)$</li>
-							<li>No se puede transicionar desde un elemento de $T\subset\Gamma$ </li>
-							<li>$\forall \gamma \in T \forall \gamma' \in \Gamma. \gamma \not\to \gamma'$</li>
-						</ul>
+					<ul>
+						<li>Tripla $(\Gamma,\to,T)$</li>
+						<li>No se puede transicionar desde un elemento de $T\subset\Gamma$ </li>
+						<li>$\forall \gamma \in T \forall \gamma' \in \Gamma. \gamma \not\to \gamma'$</li>
+					</ul>
 					</p>
 				</div>
 				<div class="fragment">
@@ -288,16 +309,18 @@
 						type sconfig = operations*state
 					</code></pre>
 					<div class="cols">
-						<img src="./assets/switch.webp" height="400"/>
+						<img src="./assets/switch.webp" height="400" />
 						<div>
-							<p><pre style="width: 100%; margin:0">
+							<p>
+							<pre style="width: 100%; margin:0">
 								<code class="hljs language-ocaml" data-trim data-noescape data-line-numbers="1|2|3|4">
 									let c1=(Switch (Switch (Switch End)),On);;
 									let c2=(Switch (Switch End),Off);;
 									let c3=(Switch End,On);;
 									let c4=(End,Off);;
 								</code>
-							</pre></p>
+							</pre>
+							</p>
 							<ul class="fragment" style="font-size: 30px;">
 								<li><code>(Switch(x),On)</code>$\to$<code>(x,Off)</code></li>
 								<li><code>(Switch(x),Off)</code>$\to$<code>(x,On)</code></li>
@@ -339,7 +362,7 @@
 				<h2>Ejemplo: lenguage pp</h2>
 				<section>
 					<h3>Aclaración: listas</h3>
-					<iframe src="./ocaml-toplevel.html" width="800" height="400" ></iframe>
+					<iframe src="./ocaml-toplevel.html" width="800" height="400"></iframe>
 					<aside class="notes">
 						Ejemplos:
 						- []
@@ -378,28 +401,33 @@
 						</code></pre>
 					</div>
 				</section>
+			</section>
 			<section>
 				<h3>Big step vs small step</h3>
-				<section data-auto-animate>
+				<section data-auto-animate style="padding-top: 1em;">
 					<ul style="font-size:24px; text-align: left;">
 						<li class="fragment fade-in-then-semi-out">
 							<p>Lenguage PP:</p>
-							<p><code>([Push 1; Push 2;Add];[])</code>$\xrightarrow[]{PPs}$<code>([Push 2;Add];[1])</code></p>
+							<p><code>([Push 1; Push 2;Add];[])</code>$\xrightarrow[]{PPs}$<code>([Push 2;Add];[1])</code>
+							</p>
 							<p><code>([Push 1; Push 2;Add];[])</code>$\xrightarrow[]{PPb}$<code>([];[3])</code></p>
 						</li>
 						<li class="fragment fade-in-then-semi-out">
 							<p>Lenguage Switch:</p>
-							<p><code>(Switch (Switch (Switch End)),On)</code>$\xrightarrow[]{Ss}$<code>((Switch (Switch End),Off)</code></p>
-							<p><code>(Switch (Switch (Switch End)),On)</code>$\xrightarrow[]{Sb}$<code>(End,Off)</code></p>
+							<p><code>(Switch (Switch (Switch End)),On)</code>$\xrightarrow[]{Ss}$<code>((Switch (Switch End),Off)</code>
+							</p>
+							<p><code>(Switch (Switch (Switch End)),On)</code>$\xrightarrow[]{Sb}$<code>(End,Off)</code>
+							</p>
 						</li>
 						<li data-id="interesting-grampa" class="fragment fade-in-then-semi-out">
 							<p>Lenguage lits:</p>
-							<p data-id="interesting-parent"><code data-id="interesting">3*4+2*3</code> $\xrightarrow[]{Ls}$  <code>12+2*3</code></p>
-							<p><code>3*4+2*3</code> $\xrightarrow[]{Lb}$  <code>18</code></p>
+							<p data-id="interesting-parent"><code data-id="interesting">3*4+2*3</code>
+								$\xrightarrow[]{Ls}$ <code>12+2*3</code></p>
+							<p><code>3*4+2*3</code> $\xrightarrow[]{Lb}$ <code>18</code></p>
 						</li>
 					</ul>
 				</section>
-				<section data-auto-animate style="font-size:28px; margin-top: 20px;">
+				<section data-auto-animate style="font-size:28px; margin-top: 30px;">
 					<ul data-id="interesting-grampa" style="text-align: center;">
 						<p data-id="interesting-parent"><code data-id="interesting">3*4+2*3</code></p>
 						<div class="fragment">
@@ -409,7 +437,7 @@
 						</div>
 					</ul>
 					<p class="fragment">$T=\{$ <code>Lit(_)</code> $\}$</p>
-					
+
 					<pre class="fragment" data-id="code" style="font-size:19px;"><code class="hljs language-ocaml" data-trim data-noescape data-line-numbers="1-2|6-8|7|8|10-13|11|12">
 						type expr = Lit of int | Sum of expr * expr | Times of expr * expr
 						type litconfig = expr
@@ -426,7 +454,9 @@
 							| _ -> raise Implementar;;
 					</code></pre>
 				</section>
-				<section data-background-iframe="https://replit.com/@jisbruzzi/ex2-small-step-lits?v=1&embed=true#main.ml" data-background-interactive>
+				<section
+					data-background-iframe="https://replit.com/@jisbruzzi/ex2-small-step-lits?v=1&embed=true#main.ml"
+					data-background-interactive>
 					<h2>Ejercicio interactivo</h2>
 					<p>https://replit.com/@jisbruzzi/ex2-small-step-lits</p>
 				</section>
@@ -434,16 +464,18 @@
 			<section>
 				Vieron esa recursión del ejercicio anterior? Bueno, fijense esta notación.
 			</section>
-			
+
 			<section>
 				Objetivo: que ellos sepan modelar small step de AST + estado
 				Pasos siguientes:
-					1. Hacer un ejercicio en vivo de switch 2 o algo así? Para que hagan algo interesante con estado. Capaz un ejercicio con `Push of int | Times | Sum`?
-					2. Plantear el "paso a paso" del ejemplo de fórmulas matemáticas
-					3. Hacer un ejercicio de small step de fórmulas matemáticas, programando ese paso a paso
-					4. Plantear eso que programaron con la notación de la barra horizontal
-					5. Mostrar un par de ejemplos con la notación de la barra horizontal (TAPL)
-					6. Listo, presentamos el lab, donde tienen que hacer el lenguaje del TAPL. Cálculo lambda queda para el TP?
+				1. Hacer un ejercicio en vivo de switch 2 o algo así? Para que hagan algo interesante con estado. Capaz
+				un ejercicio con `Push of int | Times | Sum`?
+				2. Plantear el "paso a paso" del ejemplo de fórmulas matemáticas
+				3. Hacer un ejercicio de small step de fórmulas matemáticas, programando ese paso a paso
+				4. Plantear eso que programaron con la notación de la barra horizontal
+				5. Mostrar un par de ejemplos con la notación de la barra horizontal (TAPL)
+				6. Listo, presentamos el lab, donde tienen que hacer el lenguaje del TAPL. Cálculo lambda queda para el
+				TP?
 			</section>
 		</div>
 
@@ -465,7 +497,7 @@
 			progress: true,
 			center: true,
 			hash: true,
-			navigationMode:"linear",
+			navigationMode: "linear",
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
 		});
