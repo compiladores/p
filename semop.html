@@ -462,20 +462,104 @@
 				</section>
 			</section>
 			<section>
-				Vieron esa recursión del ejercicio anterior? Bueno, fijense esta notación.
+				<h3>Notación secuente (<a href="https://en.wikipedia.org/wiki/Sequent_calculus">sequent calculus</a>)</h3>
+				<style>
+					.notacion-secuente .orange{
+						color:orange
+					}
+					.notacion-secuente .green{
+						color:yellowgreen
+					}
+					.notacion-secuente .katex-display{
+						font-size: 0.6em;
+					}
+				</style>
+				<section>
+					$$
+					A \land B \land C \implies D
+					$$
+					<p>Se escribe:</p>
+					$$
+					\begin{array}{c c c} A & B & C \end{array} \over D
+					$$
+				</section>
+				<section data-auto-animate class="notacion-secuente">
+					<div class="cols" style="grid-template-columns: 1fr;">
+						<div data-id="sum">
+						$$
+						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to Sum(\htmlClass{green}{x'},y)}
+						$$
+						$$
+						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to Sum(Lit(x),\htmlClass{green}{y'})}
+						$$
+						$$
+						{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
+						$$
+						</div>
+					</div>
+				</section>
+				<section data-auto-animate class="notacion-secuente" style="padding-top: 3em;">
+					<h4>Sistema de transición de lits</h4>
+					<pre><code class="hljs language-ocaml" data-trim>
+						type litconfig = Lit of int 
+							| Sum of litconfig * litconfig 
+							| Times of litconfig * litconfig
+					</code></pre>
+					<div class="cols">
+					
+						<div data-id="sum" >
+						$$
+						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to Sum(\htmlClass{green}{x'},y)}
+						$$
+						$$
+						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to Sum(Lit(x),\htmlClass{green}{y'})}
+						$$
+						$$
+						{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
+						$$
+						</div>
+						<div data-id="times">
+						$$
+						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Times(\htmlClass{orange}{x},y)\to Times(\htmlClass{green}{x'},y)}
+						$$
+						$$
+						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Times(Lit(x),\htmlClass{orange}{y})\to Times(Lit(x),\htmlClass{green}{y'})}
+						$$
+						$$
+						{}\over{Times(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}*\htmlClass{green}{y})}
+						$$
+						</div>
+					</div>
+					<div>$T=\{$ <code>Lit(_)</code> $\}$</div>
+				</section>
 			</section>
-
 			<section>
-				Objetivo: que ellos sepan modelar small step de AST + estado
-				Pasos siguientes:
-				1. Hacer un ejercicio en vivo de switch 2 o algo así? Para que hagan algo interesante con estado. Capaz
-				un ejercicio con `Push of int | Times | Sum`?
-				2. Plantear el "paso a paso" del ejemplo de fórmulas matemáticas
-				3. Hacer un ejercicio de small step de fórmulas matemáticas, programando ese paso a paso
-				4. Plantear eso que programaron con la notación de la barra horizontal
-				5. Mostrar un par de ejemplos con la notación de la barra horizontal (TAPL)
-				6. Listo, presentamos el lab, donde tienen que hacer el lenguaje del TAPL. Cálculo lambda queda para el
-				TP?
+				<h1>A trabajar!</h1>
+				<ul>
+					<li>
+						Laboratorio 1:
+						<ol>
+							<li>Copipastear soluciones de los replit</li>
+							<li>Implementar cálculo lambda</li>
+							<li>Suma nota hasta las 22</li>
+						</ol>
+					</li>
+					<li>
+						TP1:
+						<ol>
+							<li>Usar semop para completar diversas tareas</li>
+							<li>Fecha recomendada: en 2 semanas</li>
+							<li>Fecha descalificatoria: en 4 semanas</li>
+						</ol>
+					</li>
+					<li>
+						TP2:
+						<ol>
+							<li>Intérprete de una semop con muchas reglas</li>
+							<li>Fecha recomendada: en 4 semanas</li>
+						</ol>
+					</li>
+				</ul>
 			</section>
 		</div>
 
@@ -498,6 +582,9 @@
 			center: true,
 			hash: true,
 			navigationMode: "linear",
+			katex: {
+				trust:true
+			},
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
 		});
