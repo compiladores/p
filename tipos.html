@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8"> 
+
+	<title>Tipado</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<style>
+	[src*="https://mermaid.ink/svg/"],
+	.invert {
+		filter: invert(100%);
+	}
+
+	.cols {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.cols>* {
+		align-self: center;
+		place-self: center;
+	}
+
+	.cols>img {
+		margin: 0
+	}
+
+	.cols3 {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.cols3>* {
+		align-self: center;
+		place-self: center;
+	}
+
+	.cols-left>* {
+		align-self: left;
+		place-self: 0px;
+	}
+
+	.cols3>img {
+		margin: 0
+	}
+</style>
+
+<body>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Sistemas de tipado</h1>
+				<ol style="font-size: 12px; ">
+          <li>Que es un tipo?</li>
+					<li>Tipado simple</li>
+          <li>Relacion de tipado</li>
+    	    <li>Tipado de valores y expresiones</li>
+					<li>Derivaciones</li>
+					<li>Algoritmo de validacion: small step y big step</li>
+					<li>Tipo "funcion"</li>
+          <li>Ejemplo: Int &lt;=&gt; String</li>
+					<li>Intervalo</li>
+					<li>Presentacion Lab2</li>
+				</ol>
+			</section>
+      <section data-auto-animate>
+        <h3>Para que sirven los tipos?</h3>
+        <ul>
+          <li>Verificar ciertas propiedades del programa, como la validez</li>
+					<li>Documentacion</li>
+					<li>Verificar ciertas propiedades del programa, como la validez</li>
+        </ul>
+      </section>
+      <section data-auto-animate>
+        <h3>Tipado simple</h3>
+        <p>A cada expresion se le asigna un unico tipo.</p>
+        <p>Esto es en contraste a otros sistemas donde, por ejemplo, un Perro puede ser tambien un Animal
+          y una funcion que acepte Animal puede recibir a Perro como parametro</p>
+      </section>
+      <section data-auto-animate>
+        <h3>Relacion de tipado</h3>
+        <p>La relacion de tipado es ternaria: relaciona un contexto, una variable y un tipo.</p>
+        <p>El contexto indica el significado de cada variable.</p>
+      </section>
+      <section>
+        <h3>Relacion de tipado</h3>
+        No significa lo mismo x dentro de
+        <div class="cols3" class="fragment">
+          <div><code class="hljs language-ocaml">fun x -> x * 2</code></div>
+          <div>que en</div>
+          <div><code class="hljs language-ocaml">fun x y -> (x || y) && not (x && y)</code></div>
+        </div>
+        En la primera x es un entero y en la segunda un booleano.
+      </section>
+			<section>
+        <h3>Relacion de tipado</h3>
+        <p>Esta relacion se escribe $\Gamma \vdash t : T$, significando que en el contexto $\Gamma$ la variable $t$ es del tipo $T$</p>
+      </section>
+      <section>
+        <h3>Tipado de valores y expresiones</h3>
+        A los valores (expresiones irreducibles) se les asigna un tipo al cual pertenecen. Por ejemplo 3 es entero.
+        A las expresiones se les obtiene el tipo aplicando una serie de derivaciones (aplicaciones de reglas)
+      </section>
+      <section>
+        <h3>Reglas de tipado</h3>
+				Producen a una relacion de tipado.
+        Por ejemplo:
+        $$\frac{\Gamma \vdash t_1 : Entero, t_2: Entero}{\Gamma \vdash t_1 + t_2: Entero}$$
+        Esto significa que si sumo cosas, y estas cosas son enteros (premisa), obtengo un entero
+				$$\Gamma \vdash false: Booleano$$
+				Esto significa que false es un booleano.
+      </section>
+      <section>
+        <h3>Derivaciones</h3>
+				Usando varias reglas de tipado, puedo llegar a la conclusion que cierta expresion es de un tipo.
+				Por ejemplo si tengo las reglas:
+				$$\Gamma \vdash LiteralEntero: Entero$$
+				$$\frac{\Gamma \vdash t_1 : Entero, t_2: Entero}{\Gamma \vdash t_1 + t_2: Entero}$$
+				Puedo deducir que (2 + 3) + 4 es de tipo entero.
+      </section>
+			<section>
+        <h3>Como validar tipos simples: small step</h3>
+				Es posible validar tipos de un paso a la vez, empezando por los valores cuyo tipo es conocible sin premisa.</br>
+				En el caso de (2+3)+4 primero concluyo que 2 es un entero, luego que 3 y que 4.</br>
+				Despues obtengo que 2+3 es entero porque es suma de enteros. Lo mismo para (2+3)+4 llegando a la conclusion deseada.</br>
+				Esto es small step.
+      </section>
+			<section>
+        <h3>Como validar tipos simples: big step</h3>
+				Tambien se puede empezar desde la raiz y descender recursivamente.</br>
+				Tengo (2+3)+4. Miro que hay a la izquierda. 2+3 es una suma por lo que reviso que 2 y 3 sean enteros.</br>
+				Mira a la derecha, entero. Como los dos son enteros el tipo de todo es entero.
+      </section>
+			<section>
+        <h3>Tipo funcion</h3>
+				El tipo de las funciones se representa como $P \rightarrow R$ donde P es el tipo del parametro y R el del resultado.
+				Al verificarlas, se debe asegurar que su cuerpo consiste de una expresion que, reemplazando el parametro por un valor de tipo P devuelve un valor de tipo R.
+				Al ser llamadas se debe verificar que el tipo del parametro sea el esperado.
+      </section>
+			<section>
+				<h3>Ejemplo: Int &lt;=&gt; String</h3>
+				Tengo un sistema con literales de cadena y entero, suma (comun y concatenacion) y multiplicacion (comun y repeticion). Como en python.
+				<pre data-id="code"><code class="hljs language-python">
+					2         # 2
+					2 * 3     # 6
+					2 + 2     # 4
+					"a" + "b" # "ab"
+					3 * "a"   # "aaa"
+					"a" * "b" # invalido
+					"a" + 1   # invalido
+				</code></pre>
+			</section>
+			<section>
+				<h3>Ejemplo: Int &lt;=&gt; String</h3>
+				<div class="cols" style="font-size: 30px;">
+				Esto se podria representar con las siguientes reglas:
+				$$LiteralNumerico: Entero$$
+				$$LiteralCadena: Cadena$$
+				$$\frac{\Gamma \vdash t_1 : Entero, t_2: Entero}{\Gamma \vdash t_1 + t_2: Entero}$$
+				$$\frac{\Gamma \vdash t_1 : Cadena, t_2: Cadena}{\Gamma \vdash t_1 + t_2: Cadena}$$
+				$$\frac{\Gamma \vdash t_1 : Entero, t_2: Entero}{\Gamma \vdash t_1 * t_2: Entero}$$
+				$$\frac{\Gamma \vdash t_1 : Entero, t_2: Cadena}{\Gamma \vdash t_1 * t_2: Cadena}$$
+				$$\frac{\Gamma \vdash t_1 : Cadena, t_2: Entero}{\Gamma \vdash t_1 * t_2: Cadena}$$
+				</div>
+			</section>
+			<section>
+				<h3>Ejemplo: Int &lt;=&gt; String</h3>
+				<pre data-id="code"><code class="hljs language-ocaml" data-trim data-noescape data-line-numbers="1-2|5-6|7-10|11-15">
+					type lang1 = LiteralCadena | LiteralNumerico | Suma of lang1*lang1 | Multiplicacion lang1*lang1
+					type type1 = Cadena | Entero | Invalido
+					
+					let rec type0f lang1 = match config with
+						| LiteralCadena -> Cadena
+						| LiteralNumerico -> Entero
+						| Suma(lhs, rhs) -> match (typeof lhs, typeof rhs) with
+								| (Entero, Entero) -> Entero
+								| (Cadena, Cadena) -> Cadena
+								| _ -> Invalido
+						| Multiplicacion(lhs, rhs) -> match (typeof lhs, typeof rhs) with
+								| (Entero, Entero) -> Entero
+								| (Entero, Cadena) -> Cadena
+								| (Cadena, Entero) -> Cadena
+								| _ -> Invalido
+				</code></pre>
+			</section>
+
+      <section>
+        <h3>Intervalo</h3>
+      </section>
+			<section>
+        <h3>Presentacion lab2</h3>
+				El lab2 consiste de tres ejercicios:
+				- El primero, consiste de dos tipos y dos operaciones para convertir entre ellos.
+				- El segundo, es similar al ejemplo visto
+				- El tercero, 
+      </section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			navigationMode: "linear",
+			katex: {
+				trust:true
+			},
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>
