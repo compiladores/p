@@ -70,16 +70,41 @@
 		<!-- Any section element inside of this container is displayed as a slide -->
 		<div class="slides">
 			<section>
-				<h1>Semántica operacional</h1>
-				<ol style="font-size: 12px; ">
-					<li>Árboles en ocaml</li>
-					<li>Ejercicio 1</li>
-					<li>Sistemas de transición</li>
-					<li>semántica operacional small step vs big step</li>
-					<li>Ejercicio 2</li>
-					<li>Notación secuente</li>
-					<li>Fin</li>
+				<p>Agenda 1ra clase:
+				<ol>
+					<li>Teoría semántica operacional</li>
+					<li>Metodología de la práctica</li>
+					<li>Actividad con nota</li>
 				</ol>
+				</p>
+			</section>
+			<section>
+				<h1>Semántica operacional</h1>
+				<div class="cols" style="font-size: 0.8em;">
+					<div>
+						<p>Temas:
+						<ol>
+							<li>Árboles</li>
+							<li>Árbol sintáctico abstracto</li>
+							<li>Sistema de transición</li>
+							<li>Big step vs small step</li>
+							<li>Notación secuente</li>
+						</ol>
+						</p>
+					</div>
+					<div>
+						<p>Bibliografía:
+						<ol>
+							<li>Plotkin. A Structural Approach to Operational
+								Semantics. (descarga <a
+									href="https://homepages.inf.ed.ac.uk/gdp/publications/sos_jlap.pdf">aquí</a>
+								legalmente)
+							</li>
+							<li>Pierce. Types and programming languages.</li>
+						</ol>
+						</p>
+					</div>
+				</div>
 			</section>
 			<section data-auto-animate>
 				<h2>Árboles en ocaml</h2>
@@ -452,15 +477,18 @@
 				</section>
 			</section>
 			<section>
-				<h3>Notación secuente (<a href="https://en.wikipedia.org/wiki/Sequent_calculus">sequent calculus</a>)</h3>
+				<h3>Notación secuente (<a href="https://en.wikipedia.org/wiki/Sequent_calculus">sequent calculus</a>)
+				</h3>
 				<style>
-					.notacion-secuente .orange{
-						color:orange
+					.notacion-secuente .orange {
+						color: orange
 					}
-					.notacion-secuente .green{
-						color:yellowgreen
+
+					.notacion-secuente .green {
+						color: yellowgreen
 					}
-					.notacion-secuente .katex-display{
+
+					.notacion-secuente .katex-display {
 						font-size: 0.6em;
 					}
 				</style>
@@ -476,15 +504,18 @@
 				<section data-auto-animate class="notacion-secuente">
 					<div class="cols" style="grid-template-columns: 1fr;">
 						<div data-id="sum">
-						$$
-						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to Sum(\htmlClass{green}{x'},y)}
-						$$
-						$$
-						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to Sum(Lit(x),\htmlClass{green}{y'})}
-						$$
-						$$
-						{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
-						$$
+							$$
+							{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to
+							Sum(\htmlClass{green}{x'},y)}
+							$$
+							$$
+							{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to
+							Sum(Lit(x),\htmlClass{green}{y'})}
+							$$
+							$$
+							{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to
+							Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
+							$$
 						</div>
 					</div>
 				</section>
@@ -496,60 +527,43 @@
 							| Times of litconfig * litconfig
 					</code></pre>
 					<div class="cols">
-					
-						<div data-id="sum" >
-						$$
-						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to Sum(\htmlClass{green}{x'},y)}
-						$$
-						$$
-						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to Sum(Lit(x),\htmlClass{green}{y'})}
-						$$
-						$$
-						{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
-						$$
+
+						<div data-id="sum">
+							$$
+							{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Sum(\htmlClass{orange}{x},y)\to
+							Sum(\htmlClass{green}{x'},y)}
+							$$
+							$$
+							{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Sum(Lit(x),\htmlClass{orange}{y})\to
+							Sum(Lit(x),\htmlClass{green}{y'})}
+							$$
+							$$
+							{}\over{Sum(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to
+							Lit(\htmlClass{orange}{x}+\htmlClass{green}{y})}
+							$$
 						</div>
 						<div data-id="times">
-						$$
-						{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Times(\htmlClass{orange}{x},y)\to Times(\htmlClass{green}{x'},y)}
-						$$
-						$$
-						{\htmlClass{orange}{y} \to \htmlClass{green}{y'}}\over{Times(Lit(x),\htmlClass{orange}{y})\to Times(Lit(x),\htmlClass{green}{y'})}
-						$$
-						$$
-						{}\over{Times(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to Lit(\htmlClass{orange}{x}*\htmlClass{green}{y})}
-						$$
+							$$
+							{\htmlClass{orange}{x} \to \htmlClass{green}{x'}}\over{Times(\htmlClass{orange}{x},y)\to
+							Times(\htmlClass{green}{x'},y)}
+							$$
+							$$
+							{\htmlClass{orange}{y} \to
+							\htmlClass{green}{y'}}\over{Times(Lit(x),\htmlClass{orange}{y})\to
+							Times(Lit(x),\htmlClass{green}{y'})}
+							$$
+							$$
+							{}\over{Times(Lit(\htmlClass{orange}{x}),Lit(\htmlClass{green}{y}))\to
+							Lit(\htmlClass{orange}{x}*\htmlClass{green}{y})}
+							$$
 						</div>
 					</div>
 					<div>$T=\{$ <code>Lit(_)</code> $\}$</div>
 				</section>
 			</section>
 			<section style="font-size: 0.8em;">
-				<h1>A trabajar!</h1>
-				<ul>
-					<li>
-						Laboratorio 1:
-						<ol>
-							<li>Copipastear soluciones de los replit</li>
-							<li>Implementar cálculo lambda</li>
-							<li>Suma nota hasta las 22</li>
-						</ol>
-					</li>
-					<li>
-						TP1:
-						<ol>
-							<li>Usar semop para completar diversas tareas</li>
-							<li>Fecha recomendada: en 2 semanas</li>
-							<li>Fecha descalificatoria: en 4 semanas</li>
-						</ol>
-					</li>
-					<li>
-						TP2:
-						<ol>
-							<li>Intérprete de una semop con muchas reglas</li>
-							<li>Fecha recomendada: en 4 semanas</li>
-						</ol>
-					</li>
-				</ul>
+				<h1>¿Preguntas?</h1>
+				<p>A continuación, laboratorio.</p>
 			</section>
 		</div>
 
@@ -573,7 +587,7 @@
 			hash: true,
 			navigationMode: "linear",
 			katex: {
-				trust:true
+				trust: true
 			},
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
