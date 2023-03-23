@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<style>
+		img {
+			background: #fff;
+			border-radius: 10px;
+			box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+		}
+
+		.cols {
+			display: grid;
+			grid-auto-flow: row;
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.cols>* {
+			align-self: center;
+			place-self: center;
+		}
+	</style>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Autómatas y lexers</h1>
+				<div style="font-size: 0.5em">
+					<p>orden del día:</p>
+					<ol>
+						<li>Repaso de DFA</li>
+						<li>DFA de ejemplo</li>
+						<li>Ejercicio de DFA de ejemplo #1</li>
+						<li>Ejercicio de DFA de ejemplo #2</li>
+						<li>Ejercicio interactivo de DFA #1</li>
+						<li>Ejercicio interactivo de DFA #2</li>
+						<li>Intervalo</li>
+						<li>Lexers</li>
+						<li>Ejemplo de lexers</li>
+						<li>Generador de lexers: flex</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-markdown>
+				## Breve repaso de DFA
+				Composición de un DFA:
+				- Alfabeto $\Sigma$
+				- Conjunto de estados $D$
+				- Función de transición $T:D\times\Sigma\rightarrow D$
+				- Estado inicial $S_0 \in D$
+				- Estados de aceptación $A \subset D$
+
+				Un DFA es una tupla $(\Sigma,D,T,S_0,A)$.
+			</section>
+
+			<!-- Example of nested vertical slides -->
+			<section>
+				<h2>Cómo visualizar un DFA</h2>
+				<p>$(\Sigma,D,T,S_0,A)$</p>
+				<section>
+					<p>El siguiente DFA detecta un número impar de letras <i>a</i>.</p>
+					<img src="assets/automata.png" />
+				</section>
+				<section style="font-size: 0.5em">
+					<p>A continuación se describe el mismo DFA sin un diagrama.</p>
+					<div class="cols">
+						<ul>
+
+							<li>Alfabeto $\Sigma=\{a,b\}$</li>
+							<li>Conjunto de estados $D=\{pares, impares\}$</li>
+							<li>Estado inicial $S_0 = pares$</li>
+							<li>Estados de aceptación $A={impares}$</li>
+							<li>Función de transición $T:D\times\Sigma\rightarrow D$: tabla a continuación</li>
+						</ul>
+						<table>
+							<thead>
+								<tr>
+									<td>estado</td>
+									<td>letra</td>
+									<td>nuevo estado</td>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr></tr>
+								<td>$pares$</td>
+								<td>$a$</td>
+								<td>$impares$</td>
+								</tr>
+								<tr>
+									<td>$pares$</td>
+									<td>$b$</td>
+									<td>$pares$</td>
+								</tr>
+								<tr>
+									<td>$impares$</td>
+									<td>$a$</td>
+									<td>$pares$</td>
+								</tr>
+								<tr>
+									<td>$impares$</td>
+									<td>$b$</td>
+									<td>$impares$</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</section>
+			<section data-markdown>
+				## Ejercicio ejemplo 0
+
+				Dado $\Sigma = \{a,b\}$ , autómata que acepte todas las palabras que tienen menos de 2 `b`.
+
+				Casos de prueba:
+				- `aab`
+				- `aabaa`
+				- `aabaab`
+				- `b`
+				- `bbaaba`
+
+				---
+
+				## Ejercicio ejemplo 1
+
+				Dado $\Sigma = \{a,b,c,d\}$, autómata que acepte todas las palabras que contienen `abc`, y no tengan
+				ninguna `d`.
+
+				Casos de prueba:
+				- `aab`
+				- `aabd`
+				- `aabca`
+				- `aabcad`
+				- `ccca`
+				- `ccdca`
+
+				---
+
+				## Ejercicio interactivo 1
+
+				Dado $\Sigma = \{a,b\}$, autómata que acepte todas las palabras que contienen un número par de `a` y una
+				`b`.
+
+				Casos de prueba:
+				- `aab`
+				- `baa`
+				- `aaba`
+				- `bbb`
+
+				---
+
+				## Ejercicio interactivo 2
+
+				Dado $\Sigma = \{a,b,c\}$, autómata que acepte únicamente las palabras `b`, `ab`, `aba`. Todo lo demás
+				es inválido.
+
+				Casos de prueba:
+				- `bb`
+				- `abb`
+				- `abba`
+				- `aba`
+				- `ababab`
+			</section>
+			<section>
+				Intervalo 10'
+			</section>
+			<section data-background-color="#CCC">
+				<h1>Lexers</h1>
+				<section data-markdown style="font-size: 0.5em;">
+					## Qué es un lexer
+
+					```c
+					float matchO(char *s) { /* find a zero */
+					if (!strncmp(s, "0.0", 3))
+					return 0.;
+					}
+					```
+
+					```python
+					[
+
+					(KEYWORD_FLOAT), (ID,"match0"), (LEFT_PAREN), (KEYWORD_CHAR), (STAR), (ID,"s"),(RIGHT_PAREN),
+					(LEFT_BRACE),
+
+					(KEYWORD_IF),(LEFT_PAREN),(BANG),(ID,"strcmp"),(LEFT_PAREN),(ID,"s"),(COMMA),(STRING,"0.0"),(COMMA),(NUM,"3"),(RIGHT_PAREN),(RIGHT_PAREN),
+
+					(KEYWORD_RETURN),(REAL,"0."),(SEMICOLON),
+
+					(RIGHT_BRACE),
+
+					(EOF),
+					]
+					```
+					_Listado priorizado de expresiones regulares (siempre gana el match más largo)_
+				</section>
+				<section data-markdown style="font-size: 0.5em;">
+					## Ejemplo: Lenguaje 4++
+
+					Se permite separar con `_`
+
+					| Expresión regular | tipo de token |
+					| ----------------- | ------------- |
+					| `40` | `CUARENTA` |
+					| `4+` | `CUATROS` |
+					| `\+\+` | `MAS_MAS` |
+
+					Ejemplos:
+					| frase | tokens |
+					|-|-|
+					|`4444++40`|`(CUATROS,4444),(MAS_MAS,++),(CUARENTA,40)`|
+					|`++++4444`|`(MAS_MAS,++),(MAS_MAS,++),(CUATROS,4444)`|
+					|`4__40`|`(CUATROS,4),(CUARENTA,40)`| |`404`|`(CUARENTA,40),(CUATROS,4)`|
+				</section>
+				<section data-auto-animate>
+					<img src="./assets/separados.drawio.png" style="height: 60vh;" />
+				</section>
+				<section data-auto-animate>
+					<div class="cols">
+
+						<img src="./assets/separados.drawio.png" />
+						<img src="./assets/unidos_sin_dead.drawio.png" />
+					</div>
+					<aside class="notes">
+						<ul>
+							<li>
+								optimista: `(CUATROS,4),(CUATROS,4),(CUATROS,4)` = `444` (y longer match rule?)
+							</li>
+							<li>
+								pesimista: `44_` va al mismo lugar que `h`
+							</li>
+						</ul>
+					</aside>
+
+				</section>
+				<section data-auto-animate>
+					<div class="cols">
+
+						<img src="./assets/separados.drawio.png" />
+						<img src="./assets/unidos_con_dead.drawio.png" />
+					</div>
+				</section>
+				<section data-auto-animate>
+					<div class="cols">
+						<img src="./assets/unidos_con_dead.drawio.png" />
+						<div>
+							Nuevos tipos de estado:
+							<ul>
+								<li>Estado <b>inicial</b>: separado</li>
+								<li>Estado <b>tokenizable</b></li>
+								<li>Estado <b>inválido</b></li>
+								<li>Estado <b>muerto</b></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-markdown>
+					## Intro a flex
+
+					```
+					sudo apt install flex
+					```
+
+					```
+					flex -iI ejemplo.l && gcc -g lex.yy.c -o lexer -ll && ./lexer
+					```
+
+					```
+					%%
+					hola { printf("token1 %s\n",yytext); }
+					1 { printf("token2 %s\n",yytext); }
+					. { printf("ERROR %s\n",yytext); }
+					%%
+					```
+				</section>
+			</section>
+			<section>
+				<p>¿Preguntas?</p>
+				<p>¡A trabajar!</p>
+
+			</section>
+
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			navigationMode: "linear",
+			katex: {
+				trust: true
+			},
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>

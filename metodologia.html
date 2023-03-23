@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+</head>
+
+<body>
+	<style>
+		.comms-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
+			justify-items: stretch;
+			align-items: stretch;
+			gap: 1rem;
+		}
+
+		.comms-grid>* {
+			border: 5px solid red;
+			border-radius: 10px;
+			font-size: 0.6em;
+			aspect-ratio: 2/1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Metodología</h1>
+				<ol>
+					<li>Comunicación</li>
+					<li>Objetivos</li>
+					<li>Notas y plazos</li>
+					<li>Software para TPs</li>
+				</ol>
+			</section>
+			<section>
+				<h2>Comunicación</h2>
+				<div class="comms-grid">
+					<div>
+						<div>
+							<img src="https://www.svgrepo.com/show/353655/discord-icon.svg" width=200 height=200
+								style="margin:0;" />
+							<p>UNIRSE AHORA!</p>
+						</div>
+					</div>
+					<div>
+						<p><b>Material (en revisión):</b> compiladores.github.io</p>
+					</div>
+					<div>
+						<p><b>Formalidades:</b> https://groups.google.com/g/lenguajes-y-compiladores </p>
+					</div>
+					<div>
+						<p><b>Clases:</b> google meet</p>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2>Objetivos de la práctica</h2>
+				<ul>
+					<li>
+						Construir un compilador
+					</li>
+					<li>
+						Incorporar conceptos teóricos
+					</li>
+					<li>
+						TPF: Aportar al conocimiento de la materia
+					</li>
+				</ul>
+			</section>
+			<section style="font-size: 0.7em;">
+				<h1>Notas y plazos</h1>
+				<section>
+					<table>
+						<thead>
+							<tr>
+								<th>Entregable(s)</th>
+								<th>¿obligatorio?</th>
+								<th>¿Cuándo se hace?</th>
+								<th>Evaluación </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>LAB</td>
+								<td>no</td>
+								<td>en clase</td>
+								<td>Objetiva/automática</td>
+							</tr>
+							<tr>
+								<td>TPO</td>
+								<td>si</td>
+								<td>fecha de entrega</td>
+								<td>Objetiva/automática</td>
+							</tr>
+							<tr>
+								<td>TPX</td>
+								<td>no</td>
+								<td>fecha de entrega exclusiva</td>
+								<td>Objetiva/automática</td>
+							</tr>
+							<tr>
+								<td>TPF</td>
+								<td>si, <b>como final</b></td>
+								<td>el último mes y durante finales</td>
+								<td>checklist, subjetiva</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul>
+						<li>Las entregas de LABs, TPOs, TPXs se hacen por github classroom, script de evaluación
+							automático.</li>
+						<li>Nota final: 60% TPF + 40% nota de la práctica.</li>
+					</ul>
+				</section>
+				<section style="font-size: 0.7em;">
+					<p>Condición de aprobación (nota 4): Entregar todos los TPO antes de la última clase de la práctica</p>
+					<iframe width=800 height=500 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQg_Xk6KqXCaGjjuN8_eFZ8S_HweXNvoIhNGCRAcQIESBxV7uKxnNwW4k_EEnji-OLPApirdMX6a1p_/pubhtml?gid=173989754&amp;single=true&amp;widget=false&amp;headers=false"></iframe>
+				</section>
+				<section>
+					<h2>Trabajo Práctico Final</h2>
+					<ul>
+						<li>Objetivo: Investigar, aportar</li>
+						<li>Tema: a elección entre varios propuestos</li>
+						<li>Metodología: <ul>
+							<li>stand-ups durante el último mes y medio</li>
+							<li>presentación final a los compañeros.</li>
+						</ul></li>
+					</ul>
+				</section>
+				<section>
+					<iframe width=800 height=500 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQg_Xk6KqXCaGjjuN8_eFZ8S_HweXNvoIhNGCRAcQIESBxV7uKxnNwW4k_EEnji-OLPApirdMX6a1p_/pubhtml?gid=1728272792&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+				</section>
+			</section>
+			<section>
+				<h2>Software</h2>
+				<ul>
+					<li>linux ó WSL</li>
+					<li>deno: no lo instalen</li>
+					<li>ocaml: instalar esy (no opam ni apt!)</li>
+					<li>vscode (proveemos configuraciones, etc)</li>
+				</ul>
+			</section>
+			<section>
+				<h2>¿Preguntas?</h2>
+			</section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			navigationMode: "linear",
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>
