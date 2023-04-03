@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<style>
+		.reveal {
+			background-color: #CCC;
+			--r-main-color:black;
+			--r-heading-color:black;
+		}
+		img {
+			border-radius: 10px;
+			box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+		}
+
+		.cols {
+			display: grid;
+			grid-auto-flow: row;
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.cols>* {
+			align-self: center;
+			place-self: center;
+		}
+		.small-p p,ul{
+			font-size:0.68em
+		}
+		pre.w-100{
+			width: 100%;
+		}
+		.bg-white{
+			background-color: white;
+		}
+	</style>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Parsers descendientes recursivos</h1>
+			</section>
+
+			<section>
+				<h2>¿Qué es un parser?</h2>
+				<p>Un parser toma una cadena de tokens y los convierte en un árbol de sintaxis.</p>
+				<pre><code class="hljs language-c" data-trim data-noescape data-line-numbers>
+				float matchO(char *s) { /* find a zero */
+					if (!strncmp(s, "0.0", 3))
+					return 0.;
+				}
+				</code></pre>
+				<img src="./assets/img1.drawio.png" />
+			</section>
+
+			<!-- Example of nested vertical slides -->
+			<section>
+				<h2>¿Cómo describir sintaxis?</h2>
+				<section>
+					<p>Por medio de una <b>gramática libre de contexto</b>, que son más expresivas que las expresiones regulares. Se pueden representar de las siguientes formas:</p>
+					<ul>
+						<li>BNF</li>
+						<li>EBNF</li>
+						<li>Diagramas de sintaxis</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Representación BNF </h3>
+					<small>(ejemplo de Louden 4.10)</small>
+					<p>En esta representación, la gramática se representa como reglas de derivación:</p>
+					<pre><code class="hljs language-html" data-trim data-noescape data-line-numbers>
+					&lt;sentencia&gt;::= &lt;sent-if&gt;
+					&lt;sentencia&gt;::= otro
+					&lt;sent-if&gt;::= if ( &lt;exp&gt; ) &lt;sentencia&gt; &lt;parte-else&gt;
+					&lt;parte-else&gt;::= else &lt;sentencia&gt;
+					&lt;parte-else&gt;::= 
+					&lt;exp&gt;::= 0
+					&lt;exp&gt;::= 1
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h3>Representación EBNF</h3>
+					<p>Se agregan:</p>
+					<ul>
+						<li><code>|</code> para indicar alternativas</li>
+						<li><code>{ }</code> para indicar repetición 0 o más veces</li>
+						<li><code>[ ]</code> para indicar que algo es opcional.</li>
+					</ul>
+					<pre><code class="hljs language-html" data-trim data-noescape data-line-numbers>
+					&lt;sentencia&gt; ::= &lt;sent-if&gt; | otro
+					&lt;sent-if&gt; ::= if ( &lt;exp&gt; ) &lt;sentencia&gt; [else &lt;sentencia&gt;]
+					&lt;exp&gt; ::= 0 | 1
+					</code></pre>
+					<small><a href="https://www.lua.org/manual/5.3/manual.html#9">Ejemplo LUA</a></small>
+
+				</section>
+				<section data-auto-animate>
+					<pre><code class="hljs language-html" data-trim data-noescape data-line-numbers>
+					&lt;sentencia&gt;::= &lt;sent-if&gt;
+					&lt;sentencia&gt;::= otro
+					&lt;sent-if&gt;::= if ( &lt;exp&gt; ) &lt;sentencia&gt; &lt;parte-else&gt;
+					&lt;parte-else&gt;::= else &lt;sentencia&gt;
+					&lt;parte-else&gt;::= 
+					&lt;exp&gt;::= 0
+					&lt;exp&gt;::= 1
+					</code></pre>
+
+					<pre><code class="hljs language-html" data-trim data-noescape data-line-numbers>
+					&lt;sentencia&gt; ::= &lt;sent-if&gt; | otro
+					&lt;sent-if&gt; ::= if ( &lt;exp&gt; ) &lt;sentencia&gt; [else &lt;sentencia&gt;]
+					&lt;exp&gt; ::= 0 | 1
+					</code></pre>
+				</section>
+				<section data-auto-animate data-auto-animate-id="two">
+					<div data-id="container" class="cols">
+						<div>
+							<h3>Diagramas de sintaxis</h3>
+							<div>
+								<p>Representación gráfica de la EBNF. Su interpretación como diagrama de flujo permite extraer facilmente parsers descendientes recursivos.</p>
+								<small><a href="https://www.sqlite.org/syntaxdiagrams.html#select-stmt">Ejemplo SQLite</a></small>
+							</div>
+						</div>
+						<img data-id="graph" style="background-color: white;" src="./assets/img2.drawio.png"/>
+					</div>
+				</section>
+				<section data-auto-animate data-auto-animate-id="two">
+					<div data-id="container">
+						<img data-id="graph" style="background-color: white; height: 40vh;" src="./assets/img2.drawio.png"/>
+						<pre><code class="hljs language-html" data-trim data-noescape data-line-numbers>
+							&lt;sentencia&gt; ::= &lt;sent-if&gt; | otro
+							&lt;sent-if&gt; ::= if ( &lt;exp&gt; ) &lt;sentencia&gt; [else &lt;sentencia&gt;]
+							&lt;exp&gt; ::= 0 | 1
+						</code></pre>
+					</div>
+				</section>
+			</section>
+			<section class="small-p">
+				<h2>Parsers descendientes recursivos</h2>
+				<section>
+					<p>Los parsers descendientes recursivos son programas en los que cada función se corresponde de forma directa con una regla de la sintaxis. Verifican que una lista de tokens conforme cierta gramática y pueden hacer únicamente 2 operaciones sobre una cola de tokens: observar el siguiente token ó consumirlo. <b>No pueden "ver" más allá del primer token.</b></p>
+					<p>API del ejemplo:</p>
+					<ul>
+						<li><code>void head()</code> retorna el tipo de token del siguiente token que no fue consumido</li>
+						<li><code>void consumir(int token_type)</code> <b>verifica</b> que el tipo de token de <code>head()</code> es <code>token_type</code>. Si esta condición se cumple, lo remueve de la cola. Si no se cumple, hay un <b>error de sintaxis</b>. Imprime un error y llama <code>exit(1)</code>.</li>
+					</ul>
+				</section>
+				<section>
+					<div class="cols">
+						<img src="./assets/img_exp.drawio.png" class="bg-white"/>
+						<div>
+							<h3>Exp</h3>
+						<pre class="w-100"><code class="hljs language-c" data-trim data-noescape data-line-numbers>
+						void expr(){
+							if(head()==KW_ZERO){
+								consumir(KW_ZERO);
+							}else{
+								consumir(KW_ONE);
+							}
+						}
+						</code></pre>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="cols">
+						<img src="./assets/img_sentif.drawio.png" class="bg-white"/>
+						<div>
+							<h3>Sent-if</h3>
+						<pre class="w-100"><code class="hljs language-c" data-trim data-noescape data-line-numbers>
+						void sentif(){
+							consumir(KW_IF);
+							consumir(LEFT_PAREN);
+							expr();
+							consumir(RIGHT_PAREN);
+							sentencia();
+							if(head()==KW_ELSE){
+								consumir(KW_ELSE);
+								sentencia();
+							}
+						}
+						</code></pre>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="cols">
+						<img src="./assets/img_sentencia.drawio.png" class="bg-white"/>
+						<div>
+							<h3>Sentencia</h3>
+						<pre class="w-100"><code class="hljs language-c" data-trim data-noescape data-line-numbers>
+						void sentencia(){
+							if(head()==OTRO){
+								consumir(OTRO);
+							}else{
+								sent_if();
+							}
+						}
+						</code></pre>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section>
+				<p>¿Preguntas?</p>
+				<p>¡A trabajar!</p>
+			</section>
+
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			navigationMode: "linear",
+			katex: {
+				trust: true
+			},
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>
