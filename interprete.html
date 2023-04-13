@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<style>
+	[src*="https://mermaid.ink/svg/"],
+	.invert {
+		filter: invert(100%);
+	}
+
+	.cols {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.cols>* {
+		align-self: center;
+		place-self: center;
+	}
+
+	.cols>img {
+		margin: 0
+	}
+
+	.cols3 {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.cols3>* {
+		align-self: center;
+		place-self: center;
+	}
+
+	.cols-left>* {
+		align-self: left;
+		place-self: 0px;
+	}
+
+	.cols3>img {
+		margin: 0
+	}
+</style>
+
+<body>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Intérpretes</h1>
+				<div class="cols" style="font-size: 0.8em;">
+					<div>
+						<p>Temas:
+						<ol>
+							<li>TODO</li>
+							<li>TODO</li>
+							<li>TODO</li>
+						</ol>
+						</p>
+					</div>
+					<div>
+						<p>Bibliografía:
+						<ol>
+							<li>Mogensen, T. Æ. (2011). Introduction to compiler design. Springer. http://www.diku.dk/ torbenm/Basics.</li>
+							<li>https://craftinginterpreters.com/</li>
+						</ol>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section style="font-size:0.7em">
+				<h2>Tour por jsonlang</h2>
+				<pre><code class="hljs language-typescript" data-trim data-line-numbers="53|51|45-51|1-15|38-43|18-36">
+					export type Statement&lt;Expr> = 
+						| {
+							if: { cond: Expr; then: Statement&lt;Expr> }[];
+							else?: Statement&lt;Expr>;
+						}
+						| { while: Expr; do: Statement&lt;Expr> }
+						| Statement&lt;Expr>[]
+						| { iterator: string; from: Expr; to: Expr; step?: Expr; do: Statement&lt;Expr> }
+						| { do: Statement&lt;Expr>; until: Expr }
+						| "break"
+						| "continue"
+						| { declare: string; value: Expr }
+						| { set: string; value: Expr }
+						| { call: string; args: Expr[] }
+						| { return: Expr }
+					
+					
+					type Binops =
+						| "+"
+						| "-"
+						| "*"
+						| "/"
+						| "^"
+						| "%"
+						| "&"
+						| "|"
+						| ">>"
+						| "<<"
+						| "<"
+						| "<="
+						| ">"
+						| ">="
+						| "=="
+						| "~="
+						| "and"
+						| "or";
+					
+					export type Expression =
+						| { unop: "-" | "!" | "~"; arg: Expression }
+						| { binop: Binops; argl: Expression; argr: Expression }
+						| string
+						| { call: string; args: Expression[] }
+						| number;
+					
+					export type DeclarationStatement&lt;Stmt>={
+						function: string;
+						args: string[];
+						block: Stmt;
+					};
+					
+					export type TopStatement&lt;Expr> = Statement&lt;Expr> | DeclarationStatement&lt;Statement&lt;Expr>>
+					
+					export type JsonLang = TopStatement&lt;Expression>[];
+					
+				</code></pre>
+			</section>
+			<section>
+				<h2>Scopes</h2>
+				<section>
+					<iframe src="https://www.typescriptlang.org/play?filetype=js#code/DYUwLgBAHgvAzAGgJ4wCwG4BQBjA9gOwGddQA6YXAcwAoBvKZAXwEpNbMJOJRIoIYIAVixcISfhAAcIrniIkQ5KnQZIWmRjgLEyFGvSbMgA" width="800" height="500"></iframe>
+					<aside class="notes"><b>Nombrar el concepto de LEXICAL SCOPE!!!</b></aside>
+				</section>
+				<section data-auto-animate>
+					<p data-id="introp"><span data-id="intro">Operaciones de un </span><b>diccionario</b></p>
+					<ul>
+						<li>Crear vacío</li>
+						<li>set</li>
+						<li>look up</li>
+					</ul>
+				</section>
+				<section data-auto-animate>
+					<p data-id="introp"><span data-id="intro">Operaciones de un </span><b>contexto lexical scope (Mogensen, 4.2):</b></p>
+					<ul>
+						<li>Crear vacío</li>
+						<li>bind</li>
+						<li>look up</li>
+						<li>enter</li>
+						<li>exit</li>
+					</ul>
+					<p data-id="outrop"><span data-id="outro">Implementación posible: </span><span>pila de diccionarios</span></p>
+				</section>
+				<section data-auto-animate>
+					<p data-id="introp"><span data-id="intro">Operaciones de un </span><b>contexto nuestro:</b></p>
+					<ul>
+						<li>Crear vacío</li>
+						<li>inicializar</li>
+						<li>asignar</li>
+						<li>look up</li>
+						<li>enter</li>
+						<li>exit</li>
+						<li>entrar a función</li>
+						<li>salir de función</li>
+					</ul>
+					<p data-id="outrop"><span data-id="outro">Implementación posible: </span><span>pila de pilas de diccionarios</span></p>
+				</section>
+				<section>
+					<div class="cols">
+						<pre><code class="hljs language-typescript" data-trim data-noescape >
+							export interface IContext {
+								exitFunction(): void;
+								enterFunction(): void;
+								set(n: string, v: number): void;
+								declare(n: string, v: number): void;
+								exitBlock(): void;
+								enterBlock(): void;
+								get(n: string): number;
+							}
+						</code></pre>
+						<img src="assets/diagrama_context.excalidraw.svg" />
+					</div>
+				</section>
+			</section>
+			<section style="font-size:0.7em">
+				<h2>Modelar flujo</h2>
+				<pre><code class="hljs language-typescript" data-trim data-noescape data-line-numbers="29|7-17|36-46">
+import { Executor } from "./Executor.ts";
+import { IContext } from "../interfaces/IContext.ts";
+import { IEvaluator } from "../interfaces/IEvaluator.ts";
+
+export type FlowSignals = "breakSignal" | "continueSignal" | null;
+
+export type FlowStatement<Expr, Stmt> =
+    | {
+            if: { cond: Expr; then: Stmt }[];
+            else?: Stmt;
+        }
+    | { while: Expr; do: Stmt }
+    | Stmt[]
+    | { iterator: string; from: Expr; to: Expr; step?: Expr; do: Stmt }
+    | { do: Stmt; until: Expr }
+    | "break"
+    | "continue";
+
+export class FlowExecutor<Expr, Stmt, Sign> extends Executor<
+    FlowStatement<Expr, Stmt>,
+    Stmt,
+    FlowSignals,
+    Sign | FlowSignals
+> {
+    constructor(private evaluator: IEvaluator<Expr>, private context: IContext) {
+        super();
+    }
+
+    execute(stmt: FlowStatement<Expr, Stmt> | Stmt): FlowSignals | Sign {
+        if (stmt === "break") {
+            return "breakSignal";
+        }
+        if (stmt === "continue") {
+            return "continueSignal";
+        }
+        if (typeof stmt === "object" && stmt != null && "if" in stmt) {
+            for (const clause of stmt.if) {
+                const { cond, then } = clause;
+                if (this.evaluator.evaluate(cond)) {
+                    return this.executeNext(then);
+                }
+            }
+            if ("else" in stmt && stmt.else) {
+                return this.executeNext(stmt.else);
+            }
+        }
+        throw new Error("Not implemented");
+    }
+}
+				</code></pre>
+			</section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			navigationMode: "linear",
+			katex: {
+				trust: true
+			},
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+		});
+
+	</script>
+
+</body>
+
+</html>
