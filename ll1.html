@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js – The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<style>
+    [src*="https://mermaid.ink/svg/"],
+    .invert {
+        filter: invert(100%);
+    }
+
+    .cols {
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: 1fr 1fr;
+    }
+    .cols-60-40 {
+        grid-template-columns: 60% 40%;
+    }
+    .cols-50-50 {
+        grid-template-columns: 50% 50%;
+    }
+
+    .cols>* {
+        align-self: center;
+        place-self: center;
+    }
+
+    .cols>img {
+        margin: 0
+    }
+
+    .cols3 {
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .cols3>* {
+        align-self: center;
+        place-self: center;
+    }
+
+    .cols-left>* {
+        align-self: left;
+        place-self: 0px;
+    }
+
+    .cols3>img {
+        margin: 0
+    }
+
+    .slide pre {
+			box-shadow: none;
+            margin-top: 2px;
+            margin-bottom: 2px;
+		}
+    .reveal pre {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .li-my li{
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
+    .reveal .big-code{
+        max-height: 800px;
+    }
+</style>
+
+<body>
+
+    <div class="reveal">
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section>
+                <h1>Sintaxis y Parsers LL1</h1>
+                <div class="cols" style="font-size: 0.8em;">
+                    <div>
+                        <p>Temas:
+                        <ol>
+                            <li>Gramáticas </li>
+                            <li>Gramáticas LL1</li>
+                            <li>Ejercicio interactivo gramáticas LL1</li>
+                            <li>Parser LL1</li>
+                            <li>Ejercicio interactivo parsing LL1</li>
+                        </ol>
+                        </p>
+                    </div>
+                    <div>
+                        <p>Bibliografía:
+                        <ol>
+                            <li>Louden 4.2, 3.2.</li>
+                            <li>Ullman 4.2.1.</li>
+                            <li>Apuntes de la teórica.</li>
+                        </ol>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Qué es una Gramática</h2>
+                <p>$G=(V,T,P,S)$</p>
+                <ul style="font-size: 0.7em;">
+                    <li>Conjunto de símbolos terminales $T$ (<code>if</code>, <code>int</code>, <code>{</code> ... )
+                    </li>
+                    <li>Conjunto de símbolos <b>no</b> terminales $V$ (<code>IfStmt</code>, <code>VarDecl</code>,
+                        <code>BlockExpr</code>)</li>
+                    <li>Conjunto de producciones $P$ (<code>BlockExpr -> { CompoundStmt }</code>)</li>
+                    <li>Un símbolo inicial $S$</li>
+                </ul>
+                <p><small><a
+                            href="https://clang.llvm.org/doxygen/group__CINDEX.html#gaaccc432245b4cd9f2d470913f9ef0013">Referencia
+                            de tokens no terminales de C.</a></small></p>
+            </section>
+            <section>
+                <h2>Cómo escribimos una gramática</h2>
+                <ul style="font-size: 0.7em;">
+                    <li><code>&lt;simbolo_no_terminal&gt;</code></li>
+                    <li><code>simbolo_terminal</code></li>
+                    <li>Producción: <code>&lt;un_no_terminal&gt; ::= &lt;simbolos&gt; generados</code></li>
+                </ul>
+                <p>Derivación: aplicar producciones sucesivamente</p>
+            </section>
+            <section>
+                <h2>Gramática de Familang</h2>
+                <pre><code data-trim data-noescape>
+                    &lt;r&gt; ::= &lt;r&gt; hijo_de &lt;r&gt;
+                    &lt;r&gt; ::= &lt;r&gt; hermano_de &lt;r&gt;
+                    &lt;r&gt; ::= nombre
+                </code></pre>
+            </section>
+            <section>
+                <h3>Ejemplo 1</h3>
+                <pre><code data-trim data-noescape>
+                        Bart hijo_de Homero hermano_de Lisa
+                    </code></pre>
+                <div class="cols cols-60-40" style="font-size: 0.5em;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Producción</th>
+                                <th>¿Cuál?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <pre>&lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= &lt;r&gt; hijo_de &lt;r&gt;</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>
+                                    <pre>&lt;r&gt; hijo_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>2</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>
+                                    <pre>&lt;r&gt; hijo_de &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>
+                                    <pre>nombre hijo_de &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>
+                                    <pre>nombre hijo_de nombre hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>
+                                    <pre>nombre hijo_de nombre hermano_de nombre</pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img class="fragment" src="./assets/sintactico1.drawio.png"/>
+                </div>
+            </section>
+            <section>
+                <h3>Ejemplo 2</h3>
+                <pre><code data-trim data-noescape>
+                        Bart hijo_de Homero hermano_de Lisa
+                    </code></pre>
+                <div class="cols cols-60-40" style="font-size: 0.5em;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Producción</th>
+                                <th>¿Cuál?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <pre>&lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>1</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre>&lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= &lt;r&gt; hijo_de &lt;r&gt;</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre>&lt;r&gt; hijo_de &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre>nombre hijo_de &lt;r&gt; hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre>nombre hijo_de nombre hermano_de &lt;r&gt;</pre>
+                                </td>
+                                <td>
+                                    <pre>&lt;r&gt; ::= nombre</pre>
+                                </td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre>nombre hijo_de nombre hermano_de nombre</pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img src="./assets/sintactico2.drawio.png"/>
+                </div>
+            </section>
+            <section style="font-size:0.7em">
+                <h2>Gramáticas LL1</h2>
+                <ul>
+                    <li>No recursivas por izquierda</li>
+                    <li>No ambíguas</li>
+                </ul>
+                <div class="cols3">
+                    <div>
+                        <p>familang original</p>
+                        <pre>
+&lt;r&gt; ::= &lt;r&gt; hijo_de &lt;r&gt;
+&lt;r&gt; ::= &lt;r&gt; hermano_de &lt;r&gt;
+&lt;r&gt; ::= nombre
+                        </pre>
+                    </div>
+                    <div>
+                        <p>No ambígua:</p>
+                        <pre>
+&lt;r&gt; ::= nombre hijo_de &lt;r&gt;
+&lt;r&gt; ::= &lt;r&gt; hermano_de nombre
+&lt;r&gt; ::= nombre
+                        </pre>
+                    </div>
+                    <div>
+                        <p>LL1 (no recursiva por izquierda):</p>
+                        <pre>
+&lt;r&gt; ::= nombre &lt;r0&gt;
+&lt;r0&gt; ::= 
+&lt;r0&gt; ::= hijo_de &lt;r&gt; 
+&lt;r0&gt; ::= hermano_de &lt;r&gt;
+                        </pre>
+                    </div>
+                </div>
+            </section>
+            <section style="font-size:0.7em">
+                <h2>Ejercicio interactivo familang v2</h2>
+                <pre><code data-trim data-noescape data-line-numbers>
+                    &lt;r&gt; ::= nombre &lt;r0&gt;
+                    &lt;r0&gt; ::= 
+                    &lt;r0&gt; ::= hijo_de &lt;r&gt; 
+                    &lt;r0&gt; ::= hermano_de &lt;r&gt;
+                </code></pre>
+                <ol class="li-my">
+                    <li>Ejemplo: <code>Maggie hermano_de : Lisa hijo_de : Homero y_de Marge y_de Bart hermano_de Maggie</code></li>
+                    <li><code>Maggie hermano_de Lisa hermano_de Bart hijo_de: Homero hijo_de Abraham y_de Marge hermano_de Patty</code></li>
+                    <li><code>Maggie hijo_de : Homero hijo de Abraham y_de Marge hermano_de : Patty y_de Selma</code></li>
+                    <li><code>Luke hermano_de : Alex y_de Haley hijo_de : Phil hijo_de Frank y_de Claire hermano_de Mitchell hijo_de : Dede y_de Jay</code></li>
+                </ol>
+            </section>
+            <section>
+                <h2>¿Qué es un parser LL1?</h2>
+                <section>
+                    <p>Parser descendiente recursivo con <b>stack explícito</b>.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Desc rec</th>
+                                <th>LL1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Funciones
+                                </td>
+                                <td>
+                                    Derivaciones
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>cola de tokens</td>
+                                <td>cola de tokens</td>
+                            </tr>
+                            <tr>
+                                <td>callstack</td>
+                                <td>Stack de estado</td>
+                            </tr>
+                            <tr>
+                                <td><code>if</code> ó <code>switch</code></td>
+                                <td>Tabla <b>M</b> $M \in V \times T \rightarrow P$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section data-auto-animate>
+                    <div class="cols cols-50-50">
+                        <pre data-id="code-animation"><code data-trim data-noescape data-line-numbers data class="hljs language-python big-code" style="font-size:0.8em">
+                            stack_estado=[símbolo_inicial]
+                            cola=listado_de_tokens
+                            while len(cola) > 0:
+                                if cola[0]==stack_estado[0]:
+                                    cola.pop()
+                                    stack_estado.pop()
+                                else:
+                                    produccion = M[
+                                        stack_estado[0],
+                                        cola[0]
+                                    ]
+                                    stack_estado.push(
+                                        *produccion.lado_derecho
+                                    )
+                        </code></pre>
+                        <img src="./assets/algoritmo.drawio.png"/>
+                    </div>
+                </section>
+                <section data-auto-animate>
+                    <div class="cols cols-50-50" >
+                        <pre data-id="code-animation"><code data-trim data-noescape data-line-numbers data class="hljs language-python big-code" style="font-size:0.8em">
+                            stack_estado=[símbolo_inicial]
+                            cola=listado_de_tokens
+                            def match():
+                                cola.pop()
+                                stack_estado.pop()
+                            def apply(produccion):
+                                stack_estado.push(
+                                    *produccion.lado_derecho
+                                )
+
+                            while len(cola) > 0:
+                                if cola[0]==stack_estado[0]:
+                                    cola.pop()
+                                    stack_estado.pop()
+                                else:
+                                    produccion = M[
+                                        stack_estado[0],
+                                        cola[0]
+                                    ]
+                                    stack_estado.push(
+                                        *produccion.lado_derecho
+                                    )
+                        </code></pre>
+                        <img src="./assets/algoritmo.drawio.png"/>
+                    </div>
+                </section>
+                <section data-auto-animate>
+                    <div class="cols cols-50-50" >
+                        <pre data-id="code-animation"><code data-trim data-noescape data-line-numbers data class="hljs language-python big-code" style="font-size:0.8em">
+                            stack_estado=[símbolo_inicial]
+                            cola=listado_de_tokens
+                            def match():
+                                cola.pop()
+                                stack_estado.pop()
+                            def apply(produccion):
+                                stack_estado.push(
+                                    *produccion.lado_derecho
+                                )
+
+                            while len(cola) > 0:
+                                if cola[0]==stack_estado[0]:
+                                    match()
+                                else:
+                                    apply(M[
+                                        stack_estado[0],
+                                        cola[0]
+                                    ])
+                        </code></pre>
+                        <img src="./assets/algoritmo.drawio.png"/>
+                    </div>
+                </section>
+            </section>
+            <section style="font-size:0.7em">
+                <h2>Ejercicio de <b>parsing</b> interactivo familang v2</h2>
+                <pre><code data-trim data-noescape data-line-numbers>
+                    &lt;r&gt; ::= nombre &lt;r0&gt;
+                    &lt;r0&gt; ::= 
+                    &lt;r0&gt; ::= hijo_de &lt;r&gt; 
+                    &lt;r0&gt; ::= hermano_de &lt;r&gt;
+                </code></pre>
+                <ol class="li-my">
+                    <li>Ejemplo: <code>Maggie hermano_de : Lisa hijo_de : Homero y_de Marge y_de Bart hermano_de Maggie</code></li>
+                    <li><code>Maggie hermano_de Lisa hermano_de Bart hijo_de: Homero hijo_de Abraham y_de Marge hermano_de Patty</code></li>
+                    <li><code>Maggie hijo_de : Homero hijo de Abraham y_de Marge hermano_de : Patty y_de Selma</code></li>
+                    <li><code>Luke hermano_de : Alex y_de Haley hijo_de : Phil hijo_de Frank y_de Claire hermano_de Mitchell hijo_de : Dede y_de Jay</code></li>
+                </ol>
+            </section>
+            <section style="font-size: 0.8em;">
+                <h1>¿Preguntas?</h1>
+                <p>A continuación, intervalo y laboratorio.</p>
+            </section>
+        </div>
+
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script>
+
+        // Also available as an ES module, see:
+        // https://revealjs.com/initialization/
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            navigationMode: "linear",
+            katex: {
+                trust: true
+            },
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX]
+        });
+
+    </script>
+
+</body>
+
+</html>
